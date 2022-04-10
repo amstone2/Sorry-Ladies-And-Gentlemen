@@ -8,3 +8,5 @@
 # TOKEN=enter-token-here
 
 # Talk to Alex to get this token.
+
+# sudo -H pip3 install --upgrade youtube-dl
