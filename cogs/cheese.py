@@ -29,7 +29,7 @@ class cheese(commands.Cog):
             # Random Chance to remove cheese touch 
             randomInt = random.randint(0, 100)
             print("Random int: ", randomInt)
-            if randomInt < 3:
+            if randomInt < 15:
                 await message.channel.send(f"<@{user}> No longer has the cheese touch!")
                 await member.remove_roles(cheeseTouch)
                 await member.add_roles(noCheeseTouch)
