@@ -1,41 +1,24 @@
-# bot.py
-import os
-
-import discord
+from discord.ext import commands
 from dotenv import load_dotenv
-import garlic
+import os
+import discord
+
 
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
 GUILD = os.getenv('SERVER')
 
-client = discord.Client()
+intents = discord.Intents.default()
+intents.members = True
+client = discord.Client(intents=intents)
 
+bot = commands.Bot(command_prefix="!", intents=intents)
 
-
-@client.event
+@bot.event
 async def on_ready():
-    for guild in client.guilds:
-        if guild.name == GUILD:
-            break
+    print('logged in')
 
-    print(f'{client.user} is connected to the following guild:\n'
-          f'{guild.name}(id: {guild.id})')
+bot.load_extension("cogs.garlic")
+bot.load_extension("cogs.cheese")
 
-
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    messageFromUser = message.content
-    messageFromUserLowerCase = messageFromUser.lower()
-
-    if "garlic" in messageFromUserLowerCase:
-        response = garlic.getRandomGarlicMeme()
-        await message.channel.send(response)
-
-
-
-
-client.run(TOKEN)
+bot.run(TOKEN)
