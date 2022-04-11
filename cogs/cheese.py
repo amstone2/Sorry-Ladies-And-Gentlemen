@@ -3,6 +3,7 @@ from discord.ext import commands
 import random
 import discord
 from discord.utils import get
+import time
 
 
 intents = discord.Intents.default()
@@ -20,38 +21,52 @@ class cheese(commands.Cog):
         if message.author.bot:
             return
 
-
         if (message.guild.name == 'Ligma Pi Fraternity'):
             return
-        # print(message.channel)
 
-        print("We not in ligma")
         messages = await message.channel.history(limit=5).flatten()
 
 
-        prevMessagesAuthor = []
-        for msg in messages:
-            if msg.author.bot == False:
-                prevMessagesAuthor.append(msg.author)
+        # Gets the roles we need
+        cheeseTouch = discord.utils.get(message.guild.roles, name="Cheese Touch")
 
-        for author in prevMessagesAuthor:
-            print(author, "\n")
-        
-        # await message.channel.send("Hello")
+        # Gests who sent the message
+        user = message.author.id
+        member = message.author
 
-        # # Gets the roles we need
-        # cheeseTouch = discord.utils.get(message.guild.roles, name="Cheese Touch")
-        # clean = discord.utils.get(message.guild.roles, name="Clean")
+        await message.channel.send(f"https://static.wikia.nocookie.net/doawk/images/0/0b/Greg_technically_has_the_Cheese_Touch_as_the_boys_scream_and_ran_away.jpg/revision/latest/scale-to-width-down/755?cb=20190320011029")
 
-        # # Gests who sent the message
-        # user = message.author.id
-        # member = message.author
 
-        # # If they have the cheese touch. 
-        # if cheeseTouch in message.author.roles:
-        #     # Random Chance to remove cheese touch 
-        #     randomInt = random.randint(0, 100)
-        #     print("Random int: ", randomInt)
+        # If they have the cheese touch. 
+        if cheeseTouch in message.author.roles:
+            # Random Chance to remove cheese touch 
+            randomFloat = round(random.uniform(0.00, 99.99), 2)
+            print("Random float: ", randomFloat)
+            if randomFloat < 2.00:
+                prevMessagesAuthors = []
+                for msg in messages:
+                    if (msg.author.bot == False) & (msg.author != message.author):
+                        prevMessagesAuthors.append(msg.author)
+                    for author in prevMessagesAuthors:
+                        print(author, "\n")
+                if(len(prevMessagesAuthors) > 0):
+                    await message.channel.send(f"<@{user}> No longer has the cheese touch!")
+                    await member.remove_roles(cheeseTouch)
+
+                    time.sleep(1)
+                    await message.channel.send("Finding next host...")
+                    time.sleep(1)
+                    await message.channel.send("Finding next host...")
+                    time.sleep(1)
+                    await message.channel.send("Finding next host...")
+
+                    author = random.choice(prevMessagesAuthors)
+                    await author.add_roles(cheeseTouch)
+                    await message.channel.send(f"<@{author.id}> Now has the cheese touch!")
+                    await message.channel.send(f"https://static.wikia.nocookie.net/doawk/images/0/0b/Greg_technically_has_the_Cheese_Touch_as_the_boys_scream_and_ran_away.jpg/revision/latest/scale-to-width-down/755?cb=20190320011029")
+
+
+
         #     if randomInt < 2:
         #         await message.channel.send(f"<@{user}> No longer has the cheese touch!")
         #         await member.remove_roles(cheeseTouch)
