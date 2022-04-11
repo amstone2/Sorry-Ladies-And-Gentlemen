@@ -21,20 +21,18 @@ class cheese(commands.Cog):
         if message.author.bot:
             return
 
-        if (message.guild.name == 'Ligma Pi Fraternity'):
-            return
+        # if (message.guild.name == 'Ligma Pi Fraternity'):
+        #     return
 
         messages = await message.channel.history(limit=5).flatten()
 
 
-        # Gets the roles we need
+        # Gets the role we need
         cheeseTouch = discord.utils.get(message.guild.roles, name="Cheese Touch")
 
         # Gests who sent the message
         user = message.author.id
         member = message.author
-
-        await message.channel.send(f"https://static.wikia.nocookie.net/doawk/images/0/0b/Greg_technically_has_the_Cheese_Touch_as_the_boys_scream_and_ran_away.jpg/revision/latest/scale-to-width-down/755?cb=20190320011029")
 
 
         # If they have the cheese touch. 
@@ -62,33 +60,8 @@ class cheese(commands.Cog):
 
                     author = random.choice(prevMessagesAuthors)
                     await author.add_roles(cheeseTouch)
+                    await message.channel.send(f"https://tenor.com/view/cheese-touch-diary-of-a-wimpy-kid-greg-no-gif-25045298")
                     await message.channel.send(f"<@{author.id}> Now has the cheese touch!")
-                    await message.channel.send(f"https://static.wikia.nocookie.net/doawk/images/0/0b/Greg_technically_has_the_Cheese_Touch_as_the_boys_scream_and_ran_away.jpg/revision/latest/scale-to-width-down/755?cb=20190320011029")
-
-
-
-        #     if randomInt < 2:
-        #         await message.channel.send(f"<@{user}> No longer has the cheese touch!")
-        #         await member.remove_roles(cheeseTouch)
-        #         await member.add_roles(clean)
-            
-        #         # Get users with this role. 
-        #         usersWithNoCheese = []
-        #         for guild in self.bot.guilds:
-        #             for member in guild.members:
-        #                 if clean in member.roles:
-        #                     usersWithNoCheese.append(member)
-        #         for user in usersWithNoCheese:
-        #             print("Members with no cheese: ", user) 
-
-        #         # Pick one at random and give them the cheese touch. 
-        #         randomInt2 = random.randint(0, len(usersWithNoCheese) - 1)
-        #         print("rand int2 ", randomInt2, " with length of role", len(usersWithNoCheese))
-        #         await usersWithNoCheese[randomInt2].remove_roles(clean)
-        #         await usersWithNoCheese[randomInt2].add_roles(cheeseTouch)
-        #         await message.channel.send(f"<@{usersWithNoCheese[randomInt2].id}> Now has the cheese touch!!!!!!")
-
-
 
 def setup(bot):
     bot.add_cog(cheese(bot))
