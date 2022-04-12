@@ -60,7 +60,7 @@ class cheese(commands.Cog):
 
                     author = random.choice(prevMessagesAuthors)
                     await author.add_roles(cheeseTouch)
-                    await message.channel.send(f"<@{author.id}> Now has the cheese touch!")
+                    await message.channel.send(f"<@{author.id}> Now has the cheese touch! Typing close to other users will have a chance to give it to them.")
                     await message.channel.send(f"https://tenor.com/view/cheese-touch-diary-of-a-wimpy-kid-greg-no-gif-25045298")
                     
 
