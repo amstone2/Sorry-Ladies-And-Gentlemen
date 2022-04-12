@@ -5,8 +5,6 @@ import discord
 
 
 
-name = "alex"
-
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
 
@@ -19,14 +17,14 @@ bot = commands.Bot(command_prefix="?", intents=intents)
 @bot.event
 async def on_ready():
     print('Logged in.')
-
+    print(bot.user.name)
+    print("----------")
 # Comment these out when you are testing. 
 
 
 
 bot.load_extension("cogs.garlic")
 bot.load_extension("cogs.cheese")
-bot.load_extension("cogs.mom")
 
 
 bot.run(TOKEN)
