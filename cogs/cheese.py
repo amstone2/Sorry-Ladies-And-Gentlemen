@@ -19,11 +19,10 @@ class cheese(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    global onLigma
-
+    global infectionRateGlobal
     @commands.Cog.listener()
     async def on_message(self, message):
-        print(message.content, "\n")
+        # print(message.content, "\n")
 
         if message.author.bot:
             return
@@ -33,8 +32,7 @@ class cheese(commands.Cog):
         
         if(message.guild.name == 'Ligma Pi Fraternity'):
             return 
-
-
+        
 
         messages = await message.channel.history(limit=10).flatten()
 
@@ -81,9 +79,12 @@ class cheese(commands.Cog):
 	)
     async def changeInfectionRate(self, ctx, arg):
         global infectionRateGlobal
-        oldInfectionRate = infectionRateGlobal
-        infectionRateGlobal = arg
-        await ctx.channel.send(f"<@{ctx.author.id}> Changed infection rate from {oldInfectionRate} to {infectionRateGlobal} percent.")
+        authorID = str(ctx.author.id)
+        if(authorID == "163862875738341376"):
+            print("Alex sent this command")
+            oldInfectionRate = infectionRateGlobal
+            infectionRateGlobal = arg
+            await ctx.channel.send(f"<@{ctx.author.id}> Changed infection rate from {oldInfectionRate} to {infectionRateGlobal} percent.")
         
 
     @commands.command(
@@ -93,9 +94,11 @@ class cheese(commands.Cog):
 	)
     async def changeActivationStatus(self, ctx, arg):
         global activateTouchGlobal
-        oldTouch = activateTouchGlobal
-        activateTouchGlobal = arg
-        await ctx.channel.send(f"{ctx.author.mention} Changed activation rate from {oldTouch} to {arg}.")
+        authorID = str(ctx.author.id)
+        if(authorID == "163862875738341376"):
+            oldTouch = activateTouchGlobal
+            activateTouchGlobal = arg
+            await ctx.channel.send(f"{ctx.author.mention} Changed activation rate from {oldTouch} to {arg}.")
 
 
 
