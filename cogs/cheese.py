@@ -24,7 +24,7 @@ class cheese(commands.Cog):
         # if (message.guild.name == 'Ligma Pi Fraternity'):
         #     return
 
-        messages = await message.channel.history(limit=5).flatten()
+        messages = await message.channel.history(limit=10).flatten()
 
 
         # Gets the role we need
