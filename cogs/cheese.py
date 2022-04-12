@@ -113,6 +113,8 @@ class cheese(commands.Cog):
         for user in ctx.guild.members:
             if cheeseTouch in user.roles:
                 await ctx.channel.send(f"{user.mention} Is infected with the cheese touch.")
+
+            await ctx.channel.send('https://tenor.com/view/thats-gross-ewww-disgusting-gif-14383467')
         
 
 def setup(bot):
