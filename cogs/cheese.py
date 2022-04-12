@@ -30,8 +30,8 @@ class cheese(commands.Cog):
         if (activateTouchGlobal == False):
             return
         
-        if(message.guild.name == 'Ligma Pi Fraternity'):
-            return 
+        # if(message.guild.name == 'Ligma Pi Fraternity'):
+        #     return 
         
 
         messages = await message.channel.history(limit=10).flatten()
