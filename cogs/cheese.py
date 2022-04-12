@@ -21,8 +21,11 @@ class cheese(commands.Cog):
         if message.author.bot:
             return
 
+        # Uncomment this when you don't want to interact with ligma or a specific server.
         # if (message.guild.name == 'Ligma Pi Fraternity'):
         #     return
+
+
 
         messages = await message.channel.history(limit=10).flatten()
 
@@ -50,13 +53,12 @@ class cheese(commands.Cog):
                 if(len(prevMessagesAuthors) > 0):
                     await message.channel.send(f"<@{user}> No longer has the cheese touch!")
                     await member.remove_roles(cheeseTouch)
+                    
 
-                    time.sleep(1)
-                    await message.channel.send("Finding next host...")
-                    time.sleep(1)
-                    await message.channel.send("Finding next host...")
-                    time.sleep(1)
-                    await message.channel.send("Finding next host...")
+                    for i in range(3):
+                        time.sleep(1)
+                        await message.channel.send("Finding next host...")
+
 
                     author = random.choice(prevMessagesAuthors)
                     await author.add_roles(cheeseTouch)
