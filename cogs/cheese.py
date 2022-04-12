@@ -40,7 +40,7 @@ class cheese(commands.Cog):
             # Random Chance to remove cheese touch 
             randomFloat = round(random.uniform(0.00, 99.99), 2)
             print("Random float: ", randomFloat)
-            if randomFloat < 5:
+            if randomFloat < 3:
                 prevMessagesAuthors = []
                 for msg in messages:
                     if (msg.author.bot == False) & (msg.author != message.author):
