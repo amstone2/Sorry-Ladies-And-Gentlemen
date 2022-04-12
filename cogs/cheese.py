@@ -80,10 +80,10 @@ class cheese(commands.Cog):
 		usage='changeInfectionRate'
 	)
     async def changeInfectionRate(self, ctx, arg):
-        global infectionRate
-        oldInfectionRate = infectionRate
-        infectionRate = arg
-        await ctx.channel.send(f"<@{ctx.author.id}> Changed infection rate from {oldInfectionRate} to {arg} percent.")
+        global infectionRateGlobal
+        oldInfectionRate = infectionRateGlobal
+        infectionRateGlobal = arg
+        await ctx.channel.send(f"<@{ctx.author.id}> Changed infection rate from {oldInfectionRate} to {infectionRateGlobal} percent.")
         
 
     @commands.command(
@@ -95,7 +95,7 @@ class cheese(commands.Cog):
         global activateTouchGlobal
         oldTouch = activateTouchGlobal
         activateTouchGlobal = arg
-        await ctx.channel.send(f"<@{ctx.author.id}> Changed activation rate from {oldTouch} to {arg}.")
+        await ctx.channel.send(f"{ctx.author.mention} Changed activation rate from {oldTouch} to {arg}.")
 
 
 
