@@ -32,45 +32,67 @@ class cheese(commands.Cog):
         #     return 
         
 
-        messages = await message.channel.history(limit=10).flatten()
-
-
-        # Gets the role we need
         cheeseTouch = discord.utils.get(message.guild.roles, name="Cheese Touch")
 
-        # Gests who sent the message
-        user = message.author.id
-        member = message.author
 
 
-        # If they have the cheese touch. 
-        if cheeseTouch in message.author.roles:
-            # Random Chance to remove cheese touch 
+        tenMostRecentAuthors = []
+        tenMessages = await message.channel.history(limit=10).flatten()
+        for msg in tenMessages:
+            # No duplicates
+            if msg.author not in tenMostRecentAuthors:
+                if msg.author.bot == False:
+                    tenMostRecentAuthors.append(msg.author)
+        
+        print("10 most recent authors")
+        for author in tenMostRecentAuthors:
+            print(author)
+
+        personWithCheeseTouch = None
+        for user in message.guild.members:
+            if cheeseTouch in user.roles:
+                personWithCheeseTouch = user
+
+
+
+        # print(f"{personWithCheeseTouch} Has the cheese touch")
+
+
+
+
+
+
+
+
+        if personWithCheeseTouch in tenMostRecentAuthors:
+            print("Cheese touch user within most recent authors \n")
+            tenMostRecentAuthors.remove(personWithCheeseTouch)
+
+
+            print("Ten most recent authors no cheese touch")
+            for author in tenMostRecentAuthors:
+                print(author.name)
+            print("\n")
+
             randomFloat = round(random.uniform(0.00, 100.00), 2)
             print("Random float: ", randomFloat)
             print("Percent chance: ", infectionRateGlobal)
             print("\n")
             if randomFloat < float(infectionRateGlobal):
-                prevMessagesAuthors = []
-                for msg in messages:
-                    if (msg.author.bot == False) & (msg.author != message.author):
-                        prevMessagesAuthors.append(msg.author)
-                    for author in prevMessagesAuthors:
-                        print(author)
-                if(len(prevMessagesAuthors) > 0):
-                    await message.channel.send(f"{member.mention} No longer has the cheese touch!")
-                    await member.remove_roles(cheeseTouch)
+                if(len(tenMostRecentAuthors) > 0):
+                    await message.channel.send(f"{personWithCheeseTouch.mention} No longer has the cheese touch!")
+                    await personWithCheeseTouch.remove_roles(cheeseTouch)
                     
-
                     for i in range(3):
                         time.sleep(1)
                         await message.channel.send("Finding next host...")
 
-
-                    author = random.choice(prevMessagesAuthors)
+                    author = random.choice(tenMostRecentAuthors)
                     await author.add_roles(cheeseTouch)
                     await message.channel.send(f"<@{author.id}> Now has the cheese touch! Typing close to other users will have a chance to give it to them.")
                     await message.channel.send(f"https://tenor.com/view/cheese-touch-diary-of-a-wimpy-kid-greg-no-gif-25045298")
+            
+
     
     @commands.command(
 		name='changeInfectionRate',
