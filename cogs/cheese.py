@@ -13,8 +13,6 @@ infectionRateGlobal = 5.00
 
 
 
-
-
 class cheese(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -50,15 +48,17 @@ class cheese(commands.Cog):
             # Random Chance to remove cheese touch 
             randomFloat = round(random.uniform(0.00, 100.00), 2)
             print("Random float: ", randomFloat)
-            if randomFloat < infectionRateGlobal:
+            print("Percent chance: ", infectionRateGlobal)
+            print("\n")
+            if randomFloat < float(infectionRateGlobal):
                 prevMessagesAuthors = []
                 for msg in messages:
                     if (msg.author.bot == False) & (msg.author != message.author):
                         prevMessagesAuthors.append(msg.author)
                     for author in prevMessagesAuthors:
-                        print(author, "\n")
+                        print(author)
                 if(len(prevMessagesAuthors) > 0):
-                    await message.channel.send(f"{user.mention} No longer has the cheese touch!")
+                    await message.channel.send(f"{member.mention} No longer has the cheese touch!")
                     await member.remove_roles(cheeseTouch)
                     
 
@@ -110,14 +110,12 @@ class cheese(commands.Cog):
     async def whoIsInfected(self, ctx):
         if ctx.author.bot:
             return
-        print("hello")
         cheeseTouch = discord.utils.get(ctx.guild.roles, name="Cheese Touch")
-        print(cheeseTouch)
         for user in ctx.guild.members:
             if cheeseTouch in user.roles:
                 await ctx.channel.send(f"{user.mention} Is infected with the cheese touch.")
 
-            await ctx.channel.send('https://tenor.com/view/thats-gross-ewww-disgusting-gif-14383467')
+        await ctx.channel.send('https://tenor.com/view/thats-gross-ewww-disgusting-gif-14383467')
         
 
 def setup(bot):
