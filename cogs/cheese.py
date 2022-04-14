@@ -4,11 +4,12 @@ import random
 import discord
 from discord.utils import get
 import time
+from discord.ext import tasks
+from os.path import exists
+import json
 
 
 activateTouchGlobal = True
-
-
 infectionRateGlobal = 5.00
 
 
@@ -16,8 +17,58 @@ infectionRateGlobal = 5.00
 class cheese(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
     global infectionRateGlobal
+
+
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        self.change_presence.start()
+        if exists('ct_users.json') == False:
+            t = time.time()
+
+            
+            connected_guilds = []
+            for guild in self.bot.guilds:
+                connected_guilds.append(guild.name)
+
+
+            cheeseTouchUsers =  []
+            for guild in self.bot.guilds:
+                for user in guild.members:
+                    cheeseTouch = discord.utils.get(guild.roles, name="Cheese Touch")
+                    if cheeseTouch in user.roles:
+                        cheeseTouchUsers.append(user.name)
+            dic = {}
+            for i in range(len(connected_guilds)):
+                dic[connected_guilds[i]] = [cheeseTouchUsers[i], t]
+            
+            print(dic)
+
+            print("Creating new file")
+            jsonString = json.dumps(dic)
+            jsonFile = open("ct_users.json", "w")
+            jsonFile.write(jsonString)
+            jsonFile.close()
+        else:
+            with open('ct_users.json') as json_file:
+                data = json.load(json_file)
+
+
+        all_guilds = []
+        for guild in self.bot.guilds:
+            all_guilds.append(guild)
+
+
+        for channel in all_guilds[0].channels:
+            print(channel)
+
+    @tasks.loop(minutes=1) 
+    async def change_presence(self):
+        return
+
+
+
     @commands.Cog.listener()
     async def on_message(self, message):
         # print(message.content, "\n")
@@ -52,16 +103,6 @@ class cheese(commands.Cog):
         for user in message.guild.members:
             if cheeseTouch in user.roles:
                 personWithCheeseTouch = user
-
-
-
-        # print(f"{personWithCheeseTouch} Has the cheese touch")
-
-
-
-
-
-
 
 
         if personWithCheeseTouch in tenMostRecentAuthors:
