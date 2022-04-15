@@ -80,9 +80,6 @@ class cheese(commands.Cog):
                 ten_most_recent_authors.append(msg.author)
 
         person_with_cheese = self.get_last_person_with_cheese(message.guild.name, message.channel.members)
-        
-        for author in ten_most_recent_authors:
-            print('\t', author.name)
 
         if person_with_cheese in ten_most_recent_authors:
             # Remove person with the cheese so they don't get it again
