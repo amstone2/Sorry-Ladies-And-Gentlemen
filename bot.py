@@ -19,10 +19,13 @@ async def on_ready():
     print('Logged in.')
     print(bot.user.name)
     print("----------")
+    shared_guilds = []
+    for guild in client.guilds:
+        if ctx.author in guild.members:
+            shared_guilds.append(guild)
+
+
 # Comment these out when you are testing. 
-
-
-
 bot.load_extension("cogs.garlic")
 bot.load_extension("cogs.cheese")
 
