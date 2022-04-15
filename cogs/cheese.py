@@ -14,11 +14,11 @@ class cheese(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.activateTouchGlobal = True
-        self.infectionRateGlobal = 5.00
+        self.activate_touch_global = True
+        self.infection_rate_global = 5.00
         self.users_with_cheese = None
-        timeoutDurationDays = 2
-        self.timeoutDurationInSeconds = 86400 * timeoutDurationDays
+        timeout_duration_days = 2
+        self.timeout_duration_in_seconds = 86400 * timeout_duration_days
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -63,7 +63,7 @@ class cheese(commands.Cog):
                     await most_recent_channel.send("The cheese touch has expired!")
                     await self.reassign_cheese(server, most_recent_channel, last_person_member)
                 else:
-                    print('Cheese still valid')
+                    print('Cheese still valid for', server)
 
         return
 
@@ -74,29 +74,29 @@ class cheese(commands.Cog):
         if message.author.bot:
             return
 
-        if (self.activateTouchGlobal == False):
+        if (self.activate_touch_global == False):
             return
         
         # if(message.guild.name == 'Ligma Pi Fraternity'):
         #     return 
         
-        cheeseTouch = discord.utils.get(message.guild.roles, name="Cheese Touch")
+        cheese_touch = discord.utils.get(message.guild.roles, name="Cheese Touch")
 
-        tenMostRecentAuthors = []
-        tenMessages = await message.channel.history(limit=10).flatten()
-        for msg in tenMessages:
-            # No duplicates
-            if msg.author not in tenMostRecentAuthors:
-                if msg.author.bot == False:
-                    tenMostRecentAuthors.append(msg.author)
+        # tenMostRecentAuthors = []
+        # tenMessages = await message.channel.history(limit=10).flatten()
+        # for msg in tenMessages:
+        #     # No duplicates
+        #     if msg.author not in tenMostRecentAuthors:
+        #         if msg.author.bot == False:
+        #             tenMostRecentAuthors.append(msg.author)
         
-        print("10 most recent authors")
-        for author in tenMostRecentAuthors:
-            print(author)
+        # print("10 most recent authors")
+        # for author in tenMostRecentAuthors:
+        #     print(author)
 
         personWithCheeseTouch = None
         for user in message.guild.members:
-            if cheeseTouch in user.roles:
+            if cheese_touch in user.roles:
                 personWithCheeseTouch = user
 
         if personWithCheeseTouch in tenMostRecentAuthors:
@@ -110,19 +110,19 @@ class cheese(commands.Cog):
 
             randomFloat = round(random.uniform(0.00, 100.00), 2)
             print("Random float: ", randomFloat)
-            print("Percent chance: ", self.infectionRateGlobal)
+            print("Percent chance: ", self.infection_rate_global)
             print("\n")
-            if randomFloat < float(self.infectionRateGlobal):
+            if randomFloat < float(self.infection_rate_global):
                 if(len(tenMostRecentAuthors) > 0):
                     await message.channel.send(f"{personWithCheeseTouch.mention} No longer has the cheese touch!")
-                    await personWithCheeseTouch.remove_roles(cheeseTouch)
+                    await personWithCheeseTouch.remove_roles(cheese_touch)
                     
                     for i in range(3):
                         time.sleep(1)
                         await message.channel.send("Finding next host...")
 
                     author = random.choice(tenMostRecentAuthors)
-                    await author.add_roles(cheeseTouch)
+                    await author.add_roles(cheese_touch)
                     await message.channel.send(f"<@{author.id}> Now has the cheese touch! Typing close to other users will have a chance to give it to them.")
                     await message.channel.send(f"https://tenor.com/view/cheese-touch-diary-of-a-wimpy-kid-greg-no-gif-25045298")
     
@@ -131,13 +131,13 @@ class cheese(commands.Cog):
 		description='Changes the percent change for someone to pass along the cheese touch.',
 		usage='changeInfectionRate'
 	)
-    async def changeInfectionRate(self, ctx, arg):
+    async def change_infection_rate(self, ctx, arg):
         authorID = str(ctx.author.id)
         if(authorID == "163862875738341376"):
             print("Alex sent this command")
-            oldInfectionRate = self.infectionRateGlobal
-            self.infectionRateGlobal = arg
-            await ctx.channel.send(f"<@{ctx.author.id}> Changed infection rate from {oldInfectionRate} to {self.infectionRateGlobal} percent.")
+            oldInfectionRate = self.infection_rate_global
+            self.infection_rate_global = arg
+            await ctx.channel.send(f"<@{ctx.author.id}> Changed infection rate from {oldInfectionRate} to {self.infection_rate_global} percent.")
 
     @commands.command(
 		name='changeActivationStatus',
@@ -147,8 +147,8 @@ class cheese(commands.Cog):
     async def changeActivationStatus(self, ctx, arg):
         authorID = str(ctx.author.id)
         if(authorID == "163862875738341376"):
-            oldTouch = self.activateTouchGlobal
-            self.activateTouchGlobal = arg
+            oldTouch = self.activate_touch_global
+            self.activate_touch_global = arg
             await ctx.channel.send(f"{ctx.author.mention} Changed activation rate from {oldTouch} to {arg}.")
 
     @commands.command(
@@ -159,9 +159,9 @@ class cheese(commands.Cog):
     async def whoIsInfected(self, ctx):
         if ctx.author.bot:
             return
-        cheeseTouch = discord.utils.get(ctx.guild.roles, name="Cheese Touch")
+        cheese_touch = discord.utils.get(ctx.guild.roles, name="Cheese Touch")
         for user in ctx.guild.members:
-            if cheeseTouch in user.roles:
+            if cheese_touch in user.roles:
                 await ctx.channel.send(f"{user.mention} Is infected with the cheese touch.")
 
         await ctx.channel.send('https://tenor.com/view/thats-gross-ewww-disgusting-gif-14383467')
@@ -188,7 +188,7 @@ class cheese(commands.Cog):
 
     def has_cheese_timed_out(self, server_name):
         user_with_cheese = self.users_with_cheese[server_name]
-        return time.time() > user_with_cheese['timestamp'] + self.timeoutDurationInSeconds
+        return time.time() > user_with_cheese['timestamp'] + self.timeout_duration_in_seconds
 
     async def reassign_cheese(self, server_name, channel, last_person_with_cheese=None):
         cheese_touch_role = discord.utils.get(channel.guild.roles, name="Cheese Touch")
