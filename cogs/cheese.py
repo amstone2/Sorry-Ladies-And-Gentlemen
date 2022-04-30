@@ -15,7 +15,7 @@ class cheese(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.activateTouchGlobal = True
-        self.infectionRateGlobal = 2.00
+        self.infectionRateGlobal = 2.01
         self.users_with_cheese = None
         timeoutDurationDays = 7
         self.timeoutDurationInSeconds = 86400 * timeoutDurationDays
