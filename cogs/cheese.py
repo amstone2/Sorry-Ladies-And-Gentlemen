@@ -164,8 +164,6 @@ class cheese(commands.Cog):
             if cheeseTouch in user.roles:
                 await ctx.channel.send(f"{user.mention} Is infected with the cheese touch.")
 
-        await ctx.channel.send('https://tenor.com/view/thats-gross-ewww-disgusting-gif-14383467')
-
     async def get_most_recent_channel(self, server_name):
         most_recent_channel = None
         most_recent_timestamp = 0
