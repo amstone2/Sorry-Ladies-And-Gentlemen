@@ -116,15 +116,9 @@ class cheese(commands.Cog):
                 if(len(tenMostRecentAuthors) > 0):
                     await message.channel.send(f"{personWithCheeseTouch.mention} No longer has the cheese touch!")
                     await personWithCheeseTouch.remove_roles(cheeseTouch)
-                    
-                    for i in range(3):
-                        time.sleep(1)
-                        await message.channel.send("Finding next host...")
-
                     author = random.choice(tenMostRecentAuthors)
                     await author.add_roles(cheeseTouch)
                     await message.channel.send(f"<@{author.id}> Now has the cheese touch! Typing close to other users will have a chance to give it to them.")
-                    await message.channel.send(f"https://tenor.com/view/cheese-touch-diary-of-a-wimpy-kid-greg-no-gif-25045298")
     
     @commands.command(
 		name='changeInfectionRate',
