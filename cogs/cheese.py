@@ -210,15 +210,10 @@ class cheese(commands.Cog):
                 await message.channel.send(f"{last_person_with_cheese.mention} No longer has the cheese touch!")
                 await last_person_with_cheese.remove_roles(cheese_touch_role)
                 
-                for i in range(3):
-                    time.sleep(1)
-                    await message.channel.send("Finding next host...")
-
                 # Randomly assign to new user from the most recent messages
                 author = random.choice(ten_most_recent_authors)
                 await author.add_roles(cheese_touch_role)
                 await message.channel.send(f"<@{author.id}> Now has the cheese touch! Typing close to other users will have a chance to give it to them.")
-                await message.channel.send(f"https://tenor.com/view/cheese-touch-diary-of-a-wimpy-kid-greg-no-gif-25045298")
 
                 # Update JSON data and write to file
                 self.users_with_cheese[server_name] = {'name': author.name, 'id': author.id, 'timestamp': time.time()}
