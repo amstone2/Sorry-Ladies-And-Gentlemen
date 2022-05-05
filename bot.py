@@ -23,5 +23,7 @@ async def on_ready():
 # Comment these out when you are testing. 
 # bot.load_extension("cogs.garlic")
 bot.load_extension("cogs.cheese")
+bot.load_extension("cogs.roles")
+
 
 bot.run(TOKEN)
